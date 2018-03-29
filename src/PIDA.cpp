@@ -100,7 +100,7 @@ void PIDA::parallel_search(bool* solved, bool* killed) {
 		int nodes_expanded = 0;
 		int nodes_generated = 0;
 		int nodes_rejected = 0;
-		int min = INT_MAX;
+		int min = std::numeric_limits<int>().max();
 
 		std::shared_ptr<LiteState> root(new LiteState(initial_state));
 
