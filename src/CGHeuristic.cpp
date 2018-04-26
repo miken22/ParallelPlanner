@@ -10,10 +10,10 @@
 
     Written by Michael Nowicki
 */
-int CGHeuristic::find_path(const int& goal_var, const int& goal_val, Var_Assignment& assignment){
+int CGHeuristic::find_path(const int& goal_var, const int& goal_val, Var_Assignment& assignment) {
 
 	// Base case
-	if (goal_val == assignment[goal_var]){
+	if (goal_val == assignment[goal_var]) {
 		return 0;
 	}
 
@@ -71,9 +71,9 @@ int CGHeuristic::find_path(const int& goal_var, const int& goal_val, Var_Assignm
 
 				Var_Assignment new_local_state = local_state;
 
-				if (!conditions.empty()){
+				if (!conditions.empty()) {
 					// Solve each necessary condition recursively
-					for (std::size_t j = 0; j < conditions.size(); j++){
+					for (std::size_t j = 0; j < conditions.size(); j++) {
 						int pre_var = conditions[j].first->get_id();
 						int new_val = conditions[j].second;
                         int path_cost = find_path(pre_var, new_val, local_state);
@@ -92,7 +92,7 @@ int CGHeuristic::find_path(const int& goal_var, const int& goal_val, Var_Assignm
 				/** Check the distances array, if the cost, plus labels, plus action are better than current
                     estimate we update. The RHS of the inequality reflects 2(a) from A Planning Heuristic
                     based on Causal Graph Analysis by Malte Hemlert. */
-				if (distances[next_value] > distance + label_cost + transition.cost){
+				if (distances[next_value] > distance + label_cost + transition.cost) {
 					distances[next_value] = distance + label_cost + transition.cost;
 					                   
 					Node n = Node(next_value, distances[next_value]);

@@ -1,5 +1,4 @@
-#ifndef CGHEURISTIC_H
-#define CGHEURISTIC_H
+#pragma once
 #include "CG.h"
 #include "DTG.h"
 #include "Heuristic.h"
@@ -18,8 +17,8 @@ class CGHeuristic : public Heuristic {
 		int distance;
 		Var_Assignment local_state;
 
-		Node(int v, int d) : id(v), distance(d){}
-		~Node(){}
+		Node(int v, int d) : id(v), distance(d) {}
+		~Node() {}
 
 		int get_id() const { return id; }
 		int get_distance() const { return distance; }
@@ -30,7 +29,7 @@ class CGHeuristic : public Heuristic {
 	};
 
 	struct NodeComp{
-		bool operator()(const Node& n1, const Node& n2){
+		bool operator()(const Node& n1, const Node& n2) {
 			return (n1.get_distance() > n2.get_distance());
 		}
 	};
@@ -43,4 +42,3 @@ public:
 	CGHeuristic(const std::vector<DTG> tg, const std::map<Variable *, int> goal, const std::vector<Operator> operators)
                 : Heuristic(tg, goal, operators) {}
 };
-#endif

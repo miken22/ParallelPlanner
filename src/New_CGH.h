@@ -1,6 +1,4 @@
-#ifndef New_CGH_H
-#define New_CGH_H
-
+#pragma once
 #include "CG.h"
 #include "DTG.h"
 #include "Heuristic.h"
@@ -23,8 +21,8 @@ class New_CGH : public Heuristic {
 		int from, to, distance, id;
 		Var_Assignment local_state;
 
-		Vertex(const int& f, const int& t, const int& d, const int& i) : from(f), to(t), distance(d), id(i){}
-		~Vertex(){}
+		Vertex(const int& f, const int& t, const int& d, const int& i) : from(f), to(t), distance(d), id(i) {}
+		~Vertex() {}
 
 		int get_src() const { return from; }
 		int get_dest() const { return to; }
@@ -36,8 +34,8 @@ class New_CGH : public Heuristic {
 	};
 
 	struct VertexComp{
-		bool operator()(const Vertex& a1, const Vertex& a2){
-			if (a1.get_distance() > a2.get_distance()){
+		bool operator()(const Vertex& a1, const Vertex& a2) {
+			if (a1.get_distance() > a2.get_distance()) {
 				return true;
 			}
 			return false;
@@ -54,6 +52,5 @@ private:
 	int find_path(const int& goal_var, const int& goal_val, Var_Assignment& assignment);
 public:
 	New_CGH(std::vector<DTG> tg, std::map<Variable *, int> goal, std::vector<Operator> operators)
-            : Heuristic(tg, goal, operators){}
+            : Heuristic(tg, goal, operators) {}
 };
-#endif

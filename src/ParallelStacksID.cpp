@@ -12,7 +12,7 @@
     Written by Michael Nowicki
 */
 
-bool ParallelStacksID::find_plan(const int& h_choice){
+bool ParallelStacksID::find_plan(const int& h_choice) {
 
 	bool s = false;
 	bool k = false;
@@ -43,7 +43,7 @@ bool ParallelStacksID::find_plan(const int& h_choice){
 	{
 		// Each thread gets a private copy of the heuristic function for its use
 
-		if (omp_get_thread_num() == 0){;
+		if (omp_get_thread_num() == 0) {;
 			parallel_search(solved, killed);
 		}
 		else {
@@ -61,26 +61,26 @@ bool ParallelStacksID::find_plan(const int& h_choice){
 	return *solved;
 }
 
-bool ParallelStacksID::search_is_safe(){
+bool ParallelStacksID::search_is_safe() {
 
 	bool safe = false;
 
 #pragma omp critical
 	{
-		if ((std::find(busy.begin(), busy.end(), true) != busy.end())){
+		if ((std::find(busy.begin(), busy.end(), true) != busy.end())) {
 			safe = true;
 		}
 	}
 
 	// Ugly but needed, see PIDA implementation for explanation
-	if (safe){
+	if (safe) {
 		return safe;
 	}
 
 	return (!open_list.empty() || !process_list.empty());
 }
 
-void ParallelStacksID::parallel_search(bool* solved, bool* killed){
+void ParallelStacksID::parallel_search(bool* solved, bool* killed) {
 
 
 	// Successor function
@@ -96,7 +96,7 @@ void ParallelStacksID::parallel_search(bool* solved, bool* killed){
 	bound = initial_state.get_h();
 
 	// Main loop
-	while (!(*killed) && !(*solved)){
+	while (!(*killed) && !(*solved)) {
 
         // Initialize components for search
 		int nodes_expanded = 0;
@@ -114,9 +114,9 @@ void ParallelStacksID::parallel_search(bool* solved, bool* killed){
 		open_list.push(root);
 
 		// Stack based DFS, continues to run while both the main thread and the children both have States to process
-		while (search_is_safe()){
+		while (search_is_safe()) {
 
-			if (!timer.is_still_valid()){
+			if (!timer.is_still_valid()) {
 				*killed = true;
 				break;
 			}
@@ -129,21 +129,21 @@ void ParallelStacksID::parallel_search(bool* solved, bool* killed){
 			// Lock open_list to safely evaluate its elements
 #pragma omp critical
 			{
-				if (!open_list.empty()){
+				if (!open_list.empty()) {
 					current = open_list.top();
 					open_list.pop();
 					safe = true;
 				}
 			}
 			// If node is not safely removed, loop
-			if (!safe){
+			if (!safe) {
 				continue;
 			}
 
 			// Depth check, store smallest f value for next iteration
-			if (current->get_f() > bound){
+			if (current->get_f() > bound) {
 				int f = current->get_f();
-				if (f < min){
+				if (f < min) {
 					min = f;
 				}
 				nodes_rejected++;
@@ -151,7 +151,7 @@ void ParallelStacksID::parallel_search(bool* solved, bool* killed){
 			}
 
 			// Goal check
-			if (state_space.state_is_goal(*current, goals)){
+			if (state_space.state_is_goal(*current, goals)) {
 
 				timer.stop_timing_search();
 
@@ -182,7 +182,7 @@ void ParallelStacksID::parallel_search(bool* solved, bool* killed){
 
 				// This checks to verify if we have found the state before, if we have and can get there in fewer steps (g value) we can
 				// ignore this child.
-				if (state_space.child_is_duplicate(child)){
+				if (state_space.child_is_duplicate(child)) {
 					continue;
 				}
 
@@ -200,7 +200,7 @@ void ParallelStacksID::parallel_search(bool* solved, bool* killed){
 
         state_space.clear();
 
-		if (*solved){
+		if (*solved) {
 			break;
 		}
 		else {
@@ -209,7 +209,7 @@ void ParallelStacksID::parallel_search(bool* solved, bool* killed){
             std::cout << "Nodes expanded during iteration: " << nodes_expanded << std::endl;
             std::cout << "Nodes rejected during iteration: " << nodes_rejected << std::endl;
 
-            if (min >= 100000){
+            if (min >= 100000) {
                 std::cout << "Disabling goal protection." << std::endl;
                 Search::protect_goals = false;
             } else {
@@ -218,34 +218,34 @@ void ParallelStacksID::parallel_search(bool* solved, bool* killed){
 		}
 
 		std::cout << "Depth reached, adjusting bound to " << bound << std::endl;
-		if (!timer.is_still_valid()){
+		if (!timer.is_still_valid()) {
 			break;
 		}
 	}
 	// Signal to threads that time has expired
 	*killed = true;
-	if (!*solved){
+	if (!*solved) {
 		std::cout << "Plan could not be found in search time given." << std::endl;
 	}
 
 }
 
-void ParallelStacksID::compute_heuristics(Heuristic *heuristic, bool* solved, bool* killed, double& heuristic_timer){
+void ParallelStacksID::compute_heuristics(Heuristic *heuristic, bool* solved, bool* killed, double& heuristic_timer) {
 
 	// Keep threads in loop until
-	while (!*solved && !*killed){
+	while (!*solved && !*killed) {
 		std::shared_ptr<LiteState> current;
 		// Lock the process_list to safely examine it and remove the top if not empty
 		#pragma omp critical
 		{
-			if (!process_list.empty()){
+			if (!process_list.empty()) {
 				current = process_list.top();
 				process_list.pop();
 				busy[omp_get_thread_num() - 1] = true;
    			}
 		}
 		// Make sure an item was actually removed
-		if (!busy[omp_get_thread_num() - 1]){
+		if (!busy[omp_get_thread_num() - 1]) {
 			continue;
 		}
 		// Heuristic calculation

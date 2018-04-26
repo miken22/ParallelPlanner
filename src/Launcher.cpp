@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 	bool use_cache = false;
 	bool protect_goals = false;
 
-	if (argc == 1){
+	if (argc == 1) {
 		std::cout << "Not enough parameters provided." << std::endl;
 		exit(-1);
 	}
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 	options = Utilities::parse_command_line(argc, argv);
 
 	/* Handle Command Line options*/
-	if (options[0] > 4 || options[0] < 0){
+	if (options[0] > 4 || options[0] < 0) {
 		std::cout << "Invalid plan selected, using sequential IDA*." << std::endl;
 		plan_choice = 0;
 	}
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 		plan_choice = options[0];
 	}
 
-	if (options[1] > 3 || options[1] < 0){
+	if (options[1] > 3 || options[1] < 0) {
 		std::cout << "Invalid heuristic selected, using the blind heuristic." << std::endl;
 		heuristic_choice = 3;
 	}
@@ -63,9 +63,9 @@ int main(int argc, char *argv[]) {
 		heuristic_choice = options[1];
 	}
 
-	if (plan_choice > 1){
+	if (plan_choice > 1) {
         int num_proc = omp_get_num_procs();
-		if (options[2] < 1){
+		if (options[2] < 1) {
 			std::cout << "Invalid number of cores selected for multiprocessor search, setting to " << omp_get_num_procs() << std::endl;
 			K = omp_get_num_procs();
 		}
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
 			K = (int)pow(2,options[2]);
 		}
 	}
-	if (options[3] == 1){
+	if (options[3] == 1) {
         protect_goals = true;
 	}
 
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
 	clock_t startTime = clock();
 	std::filebuf fb;
 
-	if (fb.open(argv[1], std::ios::in)){
+	if (fb.open(argv[1], std::ios::in)) {
 		std::istream problem(&fb);
 		// Handle SAS+ file
 		parse_input(problem, variables, goals, operators, initial_state);
@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
 	double duration = (clock() - startTime) / (double)CLOCKS_PER_SEC;
 	std::cout << "Finished parsing and creating causal structures in " << duration << " seconds." << std::endl;
 
-	switch (heuristic_choice){
+	switch (heuristic_choice) {
 		case(0) :
 			std::cout << "Using the original Causal Graph Heuristic." << std::endl;
 			break;
@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	std::cout << "Using goal protection: " << Utilities::bool_to_str(protect_goals) << std:: endl;
-    if (protect_goals){
+    if (protect_goals) {
         std::cout << "Using goal protection may result in solvable tasks being rendered unsolvable" << std::endl;
     }
 
@@ -153,7 +153,7 @@ int main(int argc, char *argv[]) {
 	// Free all allocated memory
     Utilities::delete_variables(variables);
 
-	if (!solved){
+	if (!solved) {
 		std::cout << "No plan could be found for this problem." << std::endl;
 	}
 	return 0;

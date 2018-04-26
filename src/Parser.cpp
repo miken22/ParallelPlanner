@@ -4,11 +4,11 @@
     Written by Michael Nowicki
 */
 
-void read_header(std::istream& str){
+void read_header(std::istream& str) {
 	check_marker(str, "begin_version");
 	int holder = 0;
 	str >> holder;
-	if (holder != 3){
+	if (holder != 3) {
 		std::cerr << "Unexpected version of of translated problem" << std::endl;
 		exit(-1);
 	}
@@ -16,30 +16,30 @@ void read_header(std::istream& str){
 
 	check_marker(str, "begin_metric");
 	str >> holder;
-	if (holder != 0){
+	if (holder != 0) {
 		std::cerr << "Currently does not support action costs" << std::endl;
 		exit(-1);
 	}
 	check_marker(str, "end_metric");
 }
 
-void check_marker(std::istream& str, std::string marker){
+void check_marker(std::istream& str, std::string marker) {
 	std::string word;
 	str >> word;
 
-	if (word != marker){
+	if (word != marker) {
 		std::cerr << "Unexpected input recieved, terminating program." << std::endl;
 		exit(-1);
 	}
 }
 
-Variable* initialize_variable(std::istream& str){
+Variable* initialize_variable(std::istream& str) {
 	check_marker(str, "begin_variable");
 	int range, layer;
 	std::string name;
 	str >> std::ws >> name >> layer >> range >> std::ws;
 	// Read through unnecessary info.
-	for (std::size_t i = 0; i < range; i++){
+	for (std::size_t i = 0; i < range; i++) {
 		getline(str, name);
 	}
 	check_marker(str, "end_variable");
@@ -47,7 +47,7 @@ Variable* initialize_variable(std::istream& str){
 	return new Variable(range);
 }
 
-void get_variables(std::istream& str, std::vector<Variable *>& variables){
+void get_variables(std::istream& str, std::vector<Variable *>& variables) {
 	int var_count = 0;
 	str >> var_count;
 	variables.reserve(var_count);
@@ -57,10 +57,10 @@ void get_variables(std::istream& str, std::vector<Variable *>& variables){
 	}
 	std::cout << "Variables parsed: " << variables.size() << std::endl;
 }
-void get_init(std::istream& str, std::vector<Variable *>& variables, LiteState& initial_state){
+void get_init(std::istream& str, std::vector<Variable *>& variables, LiteState& initial_state) {
 	check_marker(str, "begin_state");
 	initial_state.resize(variables.size());
-	for (size_t i = 0; i < variables.size(); i++){
+	for (size_t i = 0; i < variables.size(); i++) {
 		int assignment = 0;
 		str >> assignment;
 		initial_state[variables[i]->get_id()] = assignment;
@@ -69,11 +69,11 @@ void get_init(std::istream& str, std::vector<Variable *>& variables, LiteState& 
 	std::cout << "Initial configuration loaded" << std::endl;
 }
 
-void get_goal(std::istream& str, std::map<Variable *, int>& goals, const std::vector<Variable *>& variables){
+void get_goal(std::istream& str, std::map<Variable *, int>& goals, const std::vector<Variable *>& variables) {
 	check_marker(str, "begin_goal");
 	int num_goal_facts = 0;
 	str >> num_goal_facts;
-	for (int i = 0; i < num_goal_facts; i++){
+	for (int i = 0; i < num_goal_facts; i++) {
 		int var_id;
 		int value;
 		str >> var_id;
@@ -84,7 +84,7 @@ void get_goal(std::istream& str, std::map<Variable *, int>& goals, const std::ve
 	std::cout << "Goal configuration loaded" << std::endl;
 }
 
-Operator create_operator(std::istream& str, std::vector<Variable *>& variables){
+Operator create_operator(std::istream& str, std::vector<Variable *>& variables) {
 
 	std::vector<Operator::Precond> preconditions;
 	std::vector<Operator::Effect> effects;
@@ -96,21 +96,21 @@ Operator create_operator(std::istream& str, std::vector<Variable *>& variables){
 	int num_cond = 0; // used to count both pre and post conditions
 	getline(str, action);
 	str >> num_cond;
-	for (int i = 0; i < num_cond; i++){
+	for (int i = 0; i < num_cond; i++) {
 		int var_id, value;
 		str >> var_id >> value;
 		preconditions.push_back(Operator::Precond(variables[var_id], value));
 	}
 
 	str >> num_cond;
-	for (int i = 0; i < num_cond; i++){
+	for (int i = 0; i < num_cond; i++) {
 		int cond_eff, var_id, pre, post;
 		str >> cond_eff >> var_id >> pre >> post;
 		effects.push_back(Operator::Effect(variables[var_id], pre, post));
 	}
 
 	str >> cost;
-	if (cost == 0){
+	if (cost == 0) {
 		cost = 1;
 	}
 	check_marker(str, "end_operator");
@@ -119,10 +119,10 @@ Operator create_operator(std::istream& str, std::vector<Variable *>& variables){
 
 }
 
-void get_operators(std::istream& str, std::vector<Operator>& operators, std::vector<Variable *>& variables){
+void get_operators(std::istream& str, std::vector<Operator>& operators, std::vector<Variable *>& variables) {
 	int op_count = 0;
 	str >> op_count;
-	for (int i = 0; i < op_count; i++){
+	for (int i = 0; i < op_count; i++) {
 		Operator op = create_operator(str, variables);
 		op.set_num(i);
 		operators.push_back(op);
@@ -131,7 +131,7 @@ void get_operators(std::istream& str, std::vector<Operator>& operators, std::vec
 }
 
 void parse_input(std::istream& str, std::vector<Variable *>& variables, std::map<Variable *, int>& goals,
-				 std::vector<Operator>& operators, LiteState& initial_state){
+				 std::vector<Operator>& operators, LiteState& initial_state) {
 
 	std::cout << "Beginning to parse SAS+ file:" << std::endl;
 
@@ -140,11 +140,11 @@ void parse_input(std::istream& str, std::vector<Variable *>& variables, std::map
 
 	int mutex_size = 0;
 	str >> mutex_size;
-	for (int i = 0; i < mutex_size; i++){
+	for (int i = 0; i < mutex_size; i++) {
 		int group_size = 0;
 		check_marker(str, "begin_mutex_group");
 		str >> group_size;
-		for (int j = 0; j < group_size; j++){
+		for (int j = 0; j < group_size; j++) {
 			int v1, v2;
 			str >> v1;
 			str >> v2;
@@ -158,7 +158,7 @@ void parse_input(std::istream& str, std::vector<Variable *>& variables, std::map
 
 	bool num_of_axioms;
 	str >> num_of_axioms;
-	if (num_of_axioms){
+	if (num_of_axioms) {
 		std::cout << "Currently cannot handle axioms in problem" << std::endl;
 		exit(-2);
 	}

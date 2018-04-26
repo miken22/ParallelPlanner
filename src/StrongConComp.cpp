@@ -32,11 +32,11 @@
 int ctr = 1;
 int cc_number = 0;
 
-std::vector<std::vector<int> > StrongConComp::find_components(){
+std::vector<std::vector<int> > StrongConComp::find_components() {
 
 	vars_assigned.resize(graph.size(),-1);
 
-	for (std::size_t i = 0; i < graph.size(); i++){
+	for (std::size_t i = 0; i < graph.size(); i++) {
 		preorder_map[i] = -1;
 	}
 	connected_components.resize(graph.size());
@@ -44,9 +44,9 @@ std::vector<std::vector<int> > StrongConComp::find_components(){
 
 	std::vector<int>::const_iterator it = std::find(vars_assigned.begin(), vars_assigned.end(), -1);
 
-	while (it != vars_assigned.end()){
-		for (std::size_t i = 0; i < graph.size(); i++){
-			if (vars_assigned[i] == -1){
+	while (it != vars_assigned.end()) {
+		for (std::size_t i = 0; i < graph.size(); i++) {
+			if (vars_assigned[i] == -1) {
 				dfs(i);
 			}
 			ctr = 1;
@@ -60,7 +60,7 @@ std::vector<std::vector<int> > StrongConComp::find_components(){
 	return connected_components;
 }
 
-void StrongConComp::dfs(const int& index){
+void StrongConComp::dfs(const int& index) {
 
 	// Set preorder value for first node in graph (vertex at location 0 in array)
 	preorder_map[index] = ctr;
@@ -70,24 +70,24 @@ void StrongConComp::dfs(const int& index){
 	unassigned_cc.push(index);	// S
 	curr_path.push(index);	// P
 
-	for (std::size_t i = 0; i < graph[index].size(); i++){
+	for (std::size_t i = 0; i < graph[index].size(); i++) {
 		int& neighbour = graph[index][i];
-		if (preorder_map[neighbour] == -1){
+		if (preorder_map[neighbour] == -1) {
 			dfs(neighbour);	// Recursive call of neighbours
 		}
 		else if (vars_assigned[neighbour] == -1) {	// If w has not be assigned to a scc:
-			while (preorder_map[curr_path.top()] > preorder_map[neighbour]){
+			while (preorder_map[curr_path.top()] > preorder_map[neighbour]) {
 				curr_path.pop();
 			}
 		}
 	}
-	if (curr_path.top() == index){
-		while (!unassigned_cc.empty()){
+	if (curr_path.top() == index) {
+		while (!unassigned_cc.empty()) {
 			int& comp_part = unassigned_cc.top();
 			unassigned_cc.pop();
 			connected_components[cc_number].push_back(comp_part);
 			vars_assigned[comp_part] = 1;
-			if (comp_part == index){
+			if (comp_part == index) {
 				curr_path.pop();
                 cc_number++;
 				break;

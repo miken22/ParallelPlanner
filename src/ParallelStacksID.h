@@ -1,5 +1,4 @@
-#ifndef PARALLELSTACKSID_H
-#define PARALLELSTACKSID_H
+#pragma once
 #include "Variable.h"
 #include "Operator.h"
 #include "Heuristic.h"
@@ -54,5 +53,3 @@ public:
 	// Takes an integer representing the heuristic choice and attempts to solve the task using parallel IDA*.
 	bool find_plan(const int& h_choice);
 };
-
-#endif

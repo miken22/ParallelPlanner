@@ -1,6 +1,4 @@
-#ifndef STRONGCONCOMP_H
-#define STRONGCONCOMP_H
-
+#pragma once
 #include "Variable.h"
 #include "Parser.h"
 #include "CG.h"
@@ -29,4 +27,3 @@ public:
 	std::vector<std::vector<int> > find_components();
 	StrongConComp(const std::vector<std::vector<int> >& graph) : graph(graph) {}
 };
-#endif

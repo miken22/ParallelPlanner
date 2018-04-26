@@ -5,7 +5,7 @@
 
 char* Utilities::GetOption(char ** begin, char ** end, const std::string&  option) {
 	char ** itr = std::find(begin, end, option);
-	if (itr != end && ++itr != end){
+	if (itr != end && ++itr != end) {
 		return *itr;
 	}
 	return 0;
@@ -15,7 +15,7 @@ bool Utilities::OptionExists(char** begin, char** end, const std::string& option
 	return std::find(begin, end, option) != end;
 }
 
-std::vector<int> Utilities::parse_command_line(int argc, char *argv[]){
+std::vector<int> Utilities::parse_command_line(int argc, char *argv[]) {
 	std::vector<int> options;
 	options.resize(4, -1);
 
@@ -56,7 +56,7 @@ Search* Utilities::get_search_agent(const int& agent_choice, LiteState& initial_
 Search* Utilities::get_parallel_search_agent(const int& agent_choice, LiteState& initial_state, const std::map<Variable *, int>& goals,
 	const std::vector<Operator>& operators, const std::vector<DTG>& transition_graphs, const int& K, bool protection) {
 	
-    switch(agent_choice){
+    switch(agent_choice) {
         case(2):
             std::cout << "Running parallel iterative deepening A* implemented with a priority queue and a stack." << std::endl;
             return new PIDA(initial_state, goals, operators, transition_graphs, K, protection);
@@ -70,8 +70,8 @@ Search* Utilities::get_parallel_search_agent(const int& agent_choice, LiteState&
 /** Select heuristic function. */
 
 Heuristic* Utilities::get_heuristic(const int& heuristic_choice, const std::map<Variable *, int>& goals, const std::vector<Operator>& operators,
-                                    const std::vector<DTG>& transition_graphs){
-	if (heuristic_choice == 0){
+                                    const std::vector<DTG>& transition_graphs) {
+	if (heuristic_choice == 0) {
 		return new CGHeuristic(transition_graphs, goals, operators);
 	}
 	else if (heuristic_choice == 1) {
@@ -87,7 +87,7 @@ Heuristic* Utilities::get_heuristic(const int& heuristic_choice, const std::map<
 
 void Utilities::delete_variables(std::vector<Variable *>& variables) {
 
-    for (std::size_t i = 0; i < variables.size(); i++){
+    for (std::size_t i = 0; i < variables.size(); i++) {
         delete variables[i];
     }
     variables.clear();

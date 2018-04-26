@@ -2,8 +2,7 @@
 	Abstract class for search agents to implement.
 	Written by Michael Nowicki
 */
-#ifndef SEARCH_H
-#define SEARCH_H
+#pragma once
 #include "LiteState.h"
 #include "Heuristic.h"
 #include "DTG.h"
@@ -39,7 +38,7 @@ public:
            const int& K, 
            bool protection) : initial_state(init), goals(gs), operators(ops), tg(dtg), K(K), protect_goals(protection) { }
 
-	virtual ~Search(){}
+	virtual ~Search() {}
 
 	virtual bool find_plan() = 0;
 	virtual bool find_plan(const int& h_choice) = 0;
@@ -48,5 +47,3 @@ public:
 
 	std::vector<Operator> get_applicable_ops(const LiteState& assignment);
 };
-
-#endif

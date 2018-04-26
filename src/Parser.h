@@ -1,5 +1,4 @@
-#ifndef PARSER_H
-#define PARSER_H
+#pragma once
 #include "Variable.h"
 #include "Operator.h"
 #include "LiteState.h"
@@ -33,6 +32,3 @@ void get_operators(std::istream& str, std::vector<Operator>& operators, std::vec
 
 void parse_input(std::istream& str, std::vector<Variable *>& variables, std::map<Variable *, int>& goals,
 				 std::vector<Operator>& operators, LiteState& initial_state);
-
-
-#endif

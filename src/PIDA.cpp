@@ -11,7 +11,7 @@
     Written by Michael Nowicki
 */
 
-bool PIDA::find_plan(const int& h_choice){
+bool PIDA::find_plan(const int& h_choice) {
 
 	bool s = false;
 	bool k = false;
@@ -49,7 +49,7 @@ bool PIDA::find_plan(const int& h_choice){
 	// heuristic values of states in the Compute_Heuristics() function.
 #pragma omp parallel shared(solved, killed) num_threads(K) reduction(+ : heuristic_timer)
 	{
-		if (omp_get_thread_num() == 0){
+		if (omp_get_thread_num() == 0) {
 			parallel_search(solved, killed);
 		}
 		else {
@@ -69,16 +69,16 @@ bool PIDA::find_plan(const int& h_choice){
 	return *solved;
 }
 
-bool PIDA::search_is_safe(){
+bool PIDA::search_is_safe() {
 	bool safe = false;
 #pragma omp critical
 	{
-		if ((std::find(busy.begin(), busy.end(), true) != busy.end())){
+		if ((std::find(busy.begin(), busy.end(), true) != busy.end())) {
 			safe = true;
 		}
 	}
 	// Have to do this since you cannot return or break in an OMP section
-	if (safe){
+	if (safe) {
 		return safe;
 	}
 	return (!open_list.empty() || !process_list.empty());
@@ -107,7 +107,7 @@ void PIDA::parallel_search(bool* solved, bool* killed) {
 		open_list.push(root);
 		state_space.add_initial_state(root);
 
-		while (search_is_safe()){
+		while (search_is_safe()) {
 
 			if (!timer.is_still_valid()) {
 				*killed = true;
@@ -129,14 +129,14 @@ void PIDA::parallel_search(bool* solved, bool* killed) {
 				}
 			}
 			// If node is not safely removed, loop
-			if (!safe){
+			if (!safe) {
 				continue;
 			}
 
 			// Depth check, store smallest f value for next iteration
 			if (current->get_f() > bound) {
 				int f = current->get_f();
-				if (f < min){
+				if (f < min) {
 					min = f;
 				}
 				nodes_rejected++;
@@ -191,7 +191,7 @@ void PIDA::parallel_search(bool* solved, bool* killed) {
 
 		state_space.clear();
 
-		if (*solved){
+		if (*solved) {
 			break;
 		}
 		else {
@@ -221,23 +221,23 @@ void PIDA::parallel_search(bool* solved, bool* killed) {
 
 }
 
-void PIDA::compute_heuristics(Heuristic *thread_heuristic, bool* solved, bool* killed, double& heuristic_timer){
+void PIDA::compute_heuristics(Heuristic *thread_heuristic, bool* solved, bool* killed, double& heuristic_timer) {
 
 	// Keep threads in loop until either a solution has been found or a thread signals to end the search
-	while (!*solved && !*killed){
+	while (!*solved && !*killed) {
 		std::shared_ptr<LiteState> current;
 
 		// Lock the process_list to safely examine it and remove the top if not empty
 		#pragma omp critical
 		{
-			if (!process_list.empty()){
+			if (!process_list.empty()) {
 				current = process_list.top();
 				process_list.pop();
 				busy[omp_get_thread_num() - 1] = true;
    			}
 		}
 		// Make sure an item was actually removed
-		if (!busy[omp_get_thread_num() - 1]){
+		if (!busy[omp_get_thread_num() - 1]) {
 			continue;
 		}
 		// Heuristic calculation

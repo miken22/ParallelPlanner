@@ -1,5 +1,4 @@
-#ifndef STATESPACE_H
-#define STATESPACE_H
+#pragma once
 #include "LiteState.h"
 #include "Operator.h"
 #include <string>
@@ -15,7 +14,7 @@ class StateSpace{
 	typedef std::map<LiteState, int> Graph;
 	Graph state_space; 
 public:
-	StateSpace(){}
+	StateSpace() {}
 	~StateSpace();
 
 	void add_initial_state(std::shared_ptr<LiteState> state);
@@ -27,4 +26,3 @@ public:
 
 	std::vector<int> trace_path_from_goal(std::shared_ptr<LiteState> goal_state);
 };
-#endif

@@ -85,7 +85,7 @@ bool IterativeDeepening::find_plan() {
 
 int IterativeDeepening::dfs_search(LiteState& current, int& bound, std::stack<LiteState>& path, Timer& timer) {
 	
-    if(!timer.is_still_valid()){
+    if(!timer.is_still_valid()) {
         return current.get_g();
     }
 	
@@ -99,7 +99,7 @@ int IterativeDeepening::dfs_search(LiteState& current, int& bound, std::stack<Li
 	path.push(current);
 
 	// Bound check
-	if (current.get_f() > bound){
+	if (current.get_f() > bound) {
         // Remove this state from the back of the vector
 		path.pop();
 		//path.erase(path.begin() + path.size() - 1);
@@ -109,7 +109,7 @@ int IterativeDeepening::dfs_search(LiteState& current, int& bound, std::stack<Li
 		return f;
 	}
 
-	if (state_space.state_is_goal(current, goals)){
+	if (state_space.state_is_goal(current, goals)) {
 
 		timer.stop_timing_search();
 		print_steps(path);
@@ -153,11 +153,11 @@ int IterativeDeepening::dfs_search(LiteState& current, int& bound, std::stack<Li
         int t = 0;
  		// Explore child node
 		t = dfs_search(child, bound, path, timer);
-		if (t < min){
+		if (t < min) {
 			min = t;
 		}
 		// Get out of recursion when done. 
-		if (solved){
+		if (solved) {
 			break;
 		}
 	}
@@ -167,7 +167,7 @@ int IterativeDeepening::dfs_search(LiteState& current, int& bound, std::stack<Li
 	return min;
 }
 
-void IterativeDeepening::print_steps(std::stack<LiteState> path){
+void IterativeDeepening::print_steps(std::stack<LiteState> path) {
 
 	// Record of plan
 	std::vector<int> op_steps;

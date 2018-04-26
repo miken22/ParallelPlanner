@@ -1,5 +1,4 @@
-#ifndef HEURISTIC_H
-#define HEURISTIC_H
+#pragma once
 #include "DTG.h"
 #include "LiteState.h"
 #include "Operator.h"
@@ -25,7 +24,7 @@ public:
 
 	// To minimize overhead each thread that computes heuristic estimates must have private copies of these data structures
 	Heuristic(std::vector<DTG> tg, std::map<Variable *, int> goal, std::vector<Operator> operators);
-	Heuristic(){}
+	Heuristic() {}
 	virtual ~Heuristic() {}
 
 	// Solve the path cost for the specified variable, desired value, and local state
@@ -34,4 +33,3 @@ public:
 	virtual int calc_h(std::shared_ptr<LiteState> state);
 
 };
-#endif

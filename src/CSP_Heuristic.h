@@ -1,8 +1,7 @@
 /**
     Written by Michael Nowicki
 */
-#ifndef CSP_HEURISTIC_H
-#define CSP_HEURISTIC_H
+#pragma once
 #include "Heuristic.h"
 #include "CG.h"
 #include "DTG.h"
@@ -27,7 +26,7 @@ class CSP_Heuristic : public Heuristic{
 		Var_Assignment local_state;
 
 		Node(int v, int tid, int d, int op, Var_Assignment& state) : id(v), transition_id(tid) ,distance(d), op_id(op), local_state(state) {}
-		~Node(){}
+		~Node() {}
 
 		int get_source() const { return id; }
 		int get_transition_id() const { return transition_id; }
@@ -38,7 +37,7 @@ class CSP_Heuristic : public Heuristic{
 	};
 
 	struct NodeComp{
-		bool operator()(const Node& n1, const Node& n2){
+		bool operator()(const Node& n1, const Node& n2) {
 			return (n1.get_distance() > n2.get_distance());
 		}
 	};
@@ -51,7 +50,5 @@ private:
 	int find_path(const int& goal_var, const int& goal_val, Var_Assignment& assignment);
 public:
 	CSP_Heuristic(std::vector<DTG> tg, std::map<Variable *, int> goal, std::vector<Operator> operators)
-                    : Heuristic(tg, goal, operators){}
+                    : Heuristic(tg, goal, operators) {}
 };
-
-#endif

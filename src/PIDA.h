@@ -1,5 +1,4 @@
-#ifndef PIDA_H
-#define PIDA_H
+#pragma once
 #include "Variable.h"
 #include "Operator.h"
 #include "Heuristic.h"
@@ -27,7 +26,7 @@
 class PIDA : public Search {
 // For the open list of the main thread, sort by f value
 struct OLComparator{
-	bool operator()(const std::shared_ptr<LiteState>& s1, const std::shared_ptr<LiteState>& s2){
+	bool operator()(const std::shared_ptr<LiteState>& s1, const std::shared_ptr<LiteState>& s2) {
 		int f1 = s1->get_f();
 		int f2 = s2->get_f();
 		if (f1 == f2) {
@@ -68,5 +67,3 @@ public:
 	// Takes an integer representing the heuristic choice and attempts to solve the task using parallel IDA*.
 	bool find_plan(const int& h_choice);
 };
-
-#endif

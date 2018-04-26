@@ -3,8 +3,7 @@
 
 		Written by Michael Nowicki
 */
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#pragma once
 #include "CG.h"
 #include "Search.h"
 #include "Planner.h"
@@ -66,6 +65,3 @@ public:
 	}
 
 };
-
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef DTG_H
-#define DTG_H
-
+#pragma once
 #include "Operator.h"
 #include "Variable.h"
 #include <vector>
@@ -17,7 +15,7 @@
 class DTG{
 	typedef std::vector<std::pair<Variable *, int> > Condition;
 public:
-	DTG(){}
+	DTG() {}
 	DTG(const Variable& variable);
 	struct Rule{
 		Condition condition;
@@ -36,4 +34,3 @@ public:
 
 };
 extern void build_DTGs(const std::vector<Variable *>& variables, const std::vector<Operator>& operators, std::vector<DTG>& transition_graphs, CG& cg);
-#endif

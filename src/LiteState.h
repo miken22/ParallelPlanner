@@ -1,5 +1,4 @@
-#ifndef LITESTATE_H
-#define LITESTATE_H
+#pragma once
 #include <vector>
 #include <string>
 #include <cstdlib>
@@ -31,14 +30,14 @@ public:
 	
 	LiteState() : g(0), h(-1), op_id(0) {	}
 
-	~LiteState(){	}
+	~LiteState() {	}
 
 	std::size_t get_f() const { return g + h; }	// Get f = g + h
 	std::size_t get_g() const { return g; }	// get g
 	std::size_t get_h() const { return h; }	// get h
 	std::size_t get_op_id() const { return op_id; } // get operator id
 
-	void set_h(int& value){ h = value; }	// Set h
+	void set_h(int& value) { h = value; }	// Set h
 	void set_g(int& _g) { g = _g; }	// set g
 	void set_op_id(int& opid) { op_id = opid; } // set operator id
 
@@ -47,4 +46,3 @@ public:
 	std::shared_ptr<LiteState> get_parent() { return parent; } // return reference to parent state
 
 };
-#endif

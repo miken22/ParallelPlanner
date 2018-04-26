@@ -10,7 +10,7 @@
 
 */
 
-bool Validate::try_plan(){
+bool Validate::try_plan() {
 
 	int bad_step = -1;
 	LiteState assignment = initial_state;
@@ -18,60 +18,60 @@ bool Validate::try_plan(){
 	std::cout << "Trying potential plan:" << std::endl;
 	std::cout << "***********************" << std::endl;
 
-	for (std::size_t i = 0; i < op_steps.size(); i++){
+	for (std::size_t i = 0; i < op_steps.size(); i++) {
 		const Operator& op = ops[op_steps[i]];
 
 		std::cout << op.get_action() << std::endl;
 		
 		const std::vector<Operator::Precond>& preconditions = op.get_precond();
-		for (std::size_t j = 0; j < op.get_precond().size(); j++){
+		for (std::size_t j = 0; j < op.get_precond().size(); j++) {
 			Variable *v = preconditions[j].var;
-			if (assignment[v->get_id()] != preconditions[j].pre){
+			if (assignment[v->get_id()] != preconditions[j].pre) {
 				bad_step = i;
 				break;
 			}
 		}
-		if (bad_step != -1){
+		if (bad_step != -1) {
 			break;
 		}
 
 		const std::vector<Operator::Effect>& effects = op.get_effect();
-		for (std::size_t j = 0; j < effects.size(); j++){
+		for (std::size_t j = 0; j < effects.size(); j++) {
 			Variable *v = effects[j].var;
-			if (effects[j].before != -1){
-				if (assignment[v->get_id()] != effects[j].before){
+			if (effects[j].before != -1) {
+				if (assignment[v->get_id()] != effects[j].before) {
 					bad_step = i;
 					break;
 				}
 			}
 		}
-		if (bad_step != -1){
+		if (bad_step != -1) {
 			break;
 		}
 
-		for (std::vector<Operator::Effect>::const_iterator eff_it = effects.begin(); eff_it != effects.end(); eff_it++){
+		for (std::vector<Operator::Effect>::const_iterator eff_it = effects.begin(); eff_it != effects.end(); eff_it++) {
 			Variable *v = eff_it->var;
 			int id = v->get_id();
 			assignment[id] = eff_it->after;
 		}
 	}
 
-	if (bad_step == -1){
-		for (std::map<Variable *, int>::const_iterator goal_it = goals.begin(); goal_it != goals.end(); goal_it++){
-			if (goal_it->second != assignment[goal_it->first->get_id()]){
+	if (bad_step == -1) {
+		for (std::map<Variable *, int>::const_iterator goal_it = goals.begin(); goal_it != goals.end(); goal_it++) {
+			if (goal_it->second != assignment[goal_it->first->get_id()]) {
 				bad_step = op_steps.size() + 1;
 				break;
 			}
 		}
 	}
 
-	if (bad_step == -1){
+	if (bad_step == -1) {
 		std::cout << "************************" << std::endl;
 		std::cout << "Plan has been validated." << std::endl;
 		std::cout << "************************" << std::endl;
 		return true;
 	}
-	else if (bad_step == (op_steps.size() + 1)){
+	else if (bad_step == (op_steps.size() + 1)) {
 		std::cout << "***************************************************" << std::endl;
 		std::cout << "Something went wrong validating plan at goal state." << std::endl;
 		std::cout << "***************************************************" << std::endl;

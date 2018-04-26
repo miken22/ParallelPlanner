@@ -1,5 +1,3 @@
-#ifndef BUCKETQUEUE_H
-#define BUCKETQUEUE_H
 #pragma once
 #include "LiteState.h"
 #include <algorithm>
@@ -27,7 +25,7 @@ public:
 	BucketQueue() {}
 	~BucketQueue() {}
 
-	bool empty(){
+	bool empty() {
 		return queue.empty();
 	}
 
@@ -52,4 +50,3 @@ public:
 		return queue.begin()->second.front();
 	}
 };
-#endif

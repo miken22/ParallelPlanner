@@ -1,6 +1,4 @@
-#ifndef SUCCESSORGENERATOR_H
-#define SUCCESSORGENERATOR_H
-
+#pragma once
 #include "LiteState.h"
 #include "Operator.h"
 #include "StateSpace.h"
@@ -20,12 +18,10 @@ private:
 	void apply_operator(const Operator& op, LiteState& child);
 
 public:
-	SuccessorGenerator(){}
+	SuccessorGenerator() {}
 	SuccessorGenerator(const std::map<Variable *, int> goal, bool protect) : goals(goal), protect_goals(protect) {}
-	~SuccessorGenerator(){}
+	~SuccessorGenerator() {}
 
 	std::shared_ptr<LiteState> get_successor(std::shared_ptr<LiteState> current_state, const Operator& op);
 	
 };
-
-#endif

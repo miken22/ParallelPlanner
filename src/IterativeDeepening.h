@@ -1,5 +1,4 @@
-#ifndef ITERATIVEDEEPENING_H
-#define ITERATIVEDEEPENING_H
+#pragma once
 #include "Variable.h"
 #include "Operator.h"
 #include "New_CGH.h"
@@ -47,5 +46,3 @@ public:
 	bool find_plan(const int& h_choice) { return false; }
 	bool find_plan();
 };
-
-#endif

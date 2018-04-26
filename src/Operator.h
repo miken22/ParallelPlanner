@@ -1,5 +1,4 @@
-#ifndef OPERATOR_H
-#define OPERATOR_H
+#pragma once
 #include <vector>
 #include "Variable.h"
 #include "Parser.h"
@@ -37,7 +36,7 @@ private:
 public:
 	Operator(const std::string& a, const std::vector<Precond>& pre, const std::vector<Effect>& eff, const int& c) :
 			 action(a), preconditions(pre), effects(eff), cost(c) {}
-	~Operator(){}
+	~Operator() {}
 
 	const std::vector<Precond>& get_precond() const { return preconditions; }
 	const std::vector<Effect>& get_effect() const { return effects; }
@@ -50,4 +49,3 @@ public:
 	
 	void set_num(int& n) { num = n; }
 };
-#endif

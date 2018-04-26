@@ -11,7 +11,7 @@ CSP_Heuristic::PriorityQueue CSP_Heuristic::fill_queue(const int& goal_var, cons
    
 	std::vector<std::vector<DTG::Rule> > transition_graph = transition_graphs[goal_var].get_vertices();
 
-    for (std::size_t j = 0; j < transition_graph[current_value].size(); j++){
+    for (std::size_t j = 0; j < transition_graph[current_value].size(); j++) {
         // Create an adjacency list of the nodes in the graph
         const DTG::Rule& transition = transition_graph[current_value][j];
         int label_cost = 0;
@@ -19,7 +19,7 @@ CSP_Heuristic::PriorityQueue CSP_Heuristic::fill_queue(const int& goal_var, cons
         std::vector<std::pair<Variable *, int> > conditions = transition.condition;
 
         // Recursively solve each label on the arc and sum the results, update the world state to reflect satisfied conditions.
-        for (std::size_t k = 0; k < conditions.size(); k++){
+        for (std::size_t k = 0; k < conditions.size(); k++) {
             const int& pre_var = conditions[k].first->get_id();
             const int& new_val = conditions[k].second;
             int next_label_cost = find_path(pre_var, new_val, assignment);
@@ -36,10 +36,10 @@ CSP_Heuristic::PriorityQueue CSP_Heuristic::fill_queue(const int& goal_var, cons
     return open_list;
 }
 
-int CSP_Heuristic::find_path(const int& goal_var, const int& goal_val, Var_Assignment& assignment){
+int CSP_Heuristic::find_path(const int& goal_var, const int& goal_val, Var_Assignment& assignment) {
 
 	// Base case
-	if (goal_val == assignment[goal_var]){
+	if (goal_val == assignment[goal_var]) {
 		return 0;
 	}
 
@@ -70,7 +70,7 @@ int CSP_Heuristic::find_path(const int& goal_var, const int& goal_val, Var_Assig
 		int distance = best_node.get_distance();
 		Var_Assignment local_assignment = best_node.get_local_state();
 
-		if (source == goal_val){
+		if (source == goal_val) {
 		    assignment = local_assignment; // Update world state to reflect reaching the goal
 			assignment[goal_var] = goal_val;
             return distance;    // Only handles uniform action costs where transitions have cost 1.
@@ -78,7 +78,7 @@ int CSP_Heuristic::find_path(const int& goal_var, const int& goal_val, Var_Assig
 
         // Indicates that the node has no outward arcs, since it isn't the goal node then we cannot proceed to
         // another node in the graph so we continue our search.
-		if (transition_id < 0){
+		if (transition_id < 0) {
 			continue;
 		}
 
@@ -86,7 +86,7 @@ int CSP_Heuristic::find_path(const int& goal_var, const int& goal_val, Var_Assig
 		destination = transition_graph[source][transition_id].value;
 
 		// Prevent revisitting node/transition pairs again.
-		if (distances[source][transition_id] < distance + action.get_cost()){
+		if (distances[source][transition_id] < distance + action.get_cost()) {
 			continue;
 		}
 
@@ -104,13 +104,13 @@ int CSP_Heuristic::find_path(const int& goal_var, const int& goal_val, Var_Assig
 		// If the transition leads us to a goal value we don't care about the state of the world after, so we
 		// place the node into the queue with the distance of achieving the goal to ensure we return the minimum
 		// cost of achieving the state.
-		if (destination == goal_val){
+		if (destination == goal_val) {
 			Node n(destination, -1, distance, -1, local_assignment);
 			open_list.push(n);
 			continue;
 		}
 
-		if (transition_graph[destination].size() == 0){
+		if (transition_graph[destination].size() == 0) {
 			// If destination node has no outward arcs we put -1 for operators/transition ID's. When this node is removed it is either the goal
 			// in which case we return the distance to that node, or continue as that node leads nowhere useful.
 			Node n(destination, -1, distance, -1, local_assignment);
@@ -120,7 +120,7 @@ int CSP_Heuristic::find_path(const int& goal_var, const int& goal_val, Var_Assig
             Var_Assignment next_assignment = local_assignment;
 			// Iterate through the outward arcs of d' in the DTG
             for (std::size_t i = 0; i < transition_graph[destination].size(); i++) {
-				if (transition_graph[destination][i].value == source){
+				if (transition_graph[destination][i].value == source) {
 					continue;
 				}
                 int out_cost = 0;

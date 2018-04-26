@@ -1,5 +1,4 @@
-#ifndef VALIDATE_H
-#define VALIDATE_H
+#pragma once
 #include "Operator.h"
 #include "LiteState.h"
 
@@ -20,5 +19,3 @@ public:
 
 	bool try_plan();
 };
-
-#endif

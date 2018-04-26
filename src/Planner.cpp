@@ -9,7 +9,7 @@
 #include <iostream>
 #include <limits>
 
-bool Planner::find_plan(){
+bool Planner::find_plan() {
 
 	SuccessorGenerator successor_generator(goals, Search::protect_goals);
 	Timer timer;
@@ -47,7 +47,7 @@ bool Planner::find_plan(){
 
 	open_list.push(root);
 
-	while (!open_list.empty() && timer.is_still_valid()){
+	while (!open_list.empty() && timer.is_still_valid()) {
 
 		std::shared_ptr<LiteState> current = open_list.top();
 		open_list.pop();
@@ -63,7 +63,7 @@ bool Planner::find_plan(){
             best_h = current->get_h();
 		}
 
-		if (state_space.state_is_goal(*current, goals)){
+		if (state_space.state_is_goal(*current, goals)) {
 
 			timer.stop_timing_search();
 
@@ -96,7 +96,7 @@ bool Planner::find_plan(){
 
 			// This checks to verify if we have found the state before, if we have and can get there in fewer steps (g value) we can
 			// ignore this child.
-			if (state_space.child_is_duplicate(child)){
+			if (state_space.child_is_duplicate(child)) {
 				continue;
 			}
 

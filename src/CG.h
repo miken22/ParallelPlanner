@@ -1,6 +1,4 @@
-#ifndef CG_H
-#define CG_H
-
+#pragma once
 #include "Parser.h"
 #include "Variable.h"
 #include <vector>
@@ -21,7 +19,7 @@ class Operator;
 class CG{
 
 struct OrderSets{
-	bool operator()(std::vector<Variable *> v1, std::vector<Variable *> v2){
+	bool operator()(std::vector<Variable *> v1, std::vector<Variable *> v2) {
 		if (v1.size() == v2.size()) {
 			// greater level # implies lower level (larger number => farther from goal)
 			if (v1.front()->get_level() > v2.front()->get_level()) {
@@ -33,7 +31,7 @@ struct OrderSets{
 };
 
 struct sort_node_weights{
-	bool operator()(const std::pair<Variable *, int>& left, const std::pair<Variable *, int>& right){
+	bool operator()(const std::pair<Variable *, int>& left, const std::pair<Variable *, int>& right) {
 		return left.second < right.second;
 	}
 };
@@ -81,4 +79,3 @@ public:
 	Causal_Graph get_reverse_cg() const { return reverse_cg; } // Getter
 	
 };
-#endif

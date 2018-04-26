@@ -1,6 +1,4 @@
-#ifndef PLANNER_H
-#define PLANNER_H
-
+#pragma once
 #include "CGHeuristic.h"
 #include "New_CGH.h"
 #include "CSP_Heuristic.h"
@@ -29,8 +27,8 @@
 
 class Planner : public Search {
 	struct CompareHeuristics{
-		CompareHeuristics(){}
-		bool operator()(const std::shared_ptr<LiteState>& s1, const std::shared_ptr<LiteState>& s2){
+		CompareHeuristics() {}
+		bool operator()(const std::shared_ptr<LiteState>& s1, const std::shared_ptr<LiteState>& s2) {
 			int f1 = s1->get_f();
 			int f2 = s2->get_f();
 			if (f1 == f2) {
@@ -54,4 +52,3 @@ public:
 	bool find_plan();
 
 };
-#endif

@@ -13,7 +13,7 @@ Heuristic::Heuristic(const std::vector<DTG> tg, const std::map<Variable *, int> 
     To compute the heuristic value of a state we iterate over all variables v such that s*(v) is defined
     and sum the cost of achieving each goal value individually.
 */
-int Heuristic::calc_h(std::shared_ptr<LiteState> state){
+int Heuristic::calc_h(std::shared_ptr<LiteState> state) {
 
 	int h = 0;
 	bool new_entry = true;
@@ -75,6 +75,6 @@ int Heuristic::calc_h(std::shared_ptr<LiteState> state){
 }*/
 
 // Simple comparator to order goal variables
-bool StepComparator(const std::pair<Variable *, int>& p1, const std::pair<Variable *, int>& p2){
+bool StepComparator(const std::pair<Variable *, int>& p1, const std::pair<Variable *, int>& p2) {
 	return p1.second > p2.second;
 }

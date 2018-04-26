@@ -1,5 +1,4 @@
-#ifndef TIMER_H
-#define TIMER_H
+#pragma once
 #include <omp.h>
 
 /*
@@ -23,5 +22,3 @@ public:
 	Timer() : duration(1800) {}
 	Timer(int time) : duration(time) {}
 };
-
-#endif
