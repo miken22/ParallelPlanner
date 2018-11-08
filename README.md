@@ -1,7 +1,5 @@
 # NOTE:
-As of November 2018 this project is undergoing a major refactor to update the codebase to modern C++ conventions, to practice my development skills, and to demonstrate the improvement in my
-development skills since completing my undergrad.
-=
+As of November 2018 this project is undergoing a major refactor to update the codebase to modern C++ conventions and to practice my C++ development.
 
 # ParallelPlanner
 An openMP implementation for an automated planner for tasks represented using the SAS+ formulation.
@@ -25,7 +23,7 @@ is successful the executable Planner file should appear in the directory.
 - To run the planner use the following command:
 
 ```
-./Biuld/Path/Planner ./Build/Path/tests/test_name.sas -s (0-3) -h (0,2,3) [-p (1,...)] [-c] [-g]
+./Biuld/Path/Planner ./Build/Path/tests/test_name.sas -planner (0,1,2,3) -heuristic (0,1,2) [-cores (1,...)]
 ```
 
 The first flag (-s) selects the planner type by entering an integer from 0-3 after the flag. The options are as follows:
