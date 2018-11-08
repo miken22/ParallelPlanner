@@ -1,3 +1,8 @@
+# NOTE:
+As of November 2018 this project is undergoing a major refactor to update the codebase to modern C++ conventions, to practice my development skills, and to demonstrate the improvement in my
+development skills since completing my undergrad.
+=
+
 # ParallelPlanner
 An openMP implementation for an automated planner for tasks represented using the SAS+ formulation.
 Developed by Michael Nowicki for COSC 449 Honours Thesis, 2015.
