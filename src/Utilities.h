@@ -39,12 +39,4 @@ namespace Utilities
             options[Options::NUMBER_OF_CORES] = get_option(argv, argv + argc, "-" + Options::NUMBER_OF_CORES);
         }
     }
-
-    namespace Parser
-    {
-        void parse_input_problem(const std::string& problem_file)
-        {
-            
-        }
-    }
 }
